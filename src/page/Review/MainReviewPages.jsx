@@ -41,7 +41,7 @@ function MainReviewPages() {
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
     fetch(
-      `https://maketerbackend.fly.dev/api/v1/restaurants/category/${category}`
+      `https://makter-backend.fly.dev/api/v1/restaurants/category/${category}`
     )
       .then((response) => {
         if (response.ok) {

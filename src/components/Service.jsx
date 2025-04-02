@@ -20,7 +20,7 @@ const Service = ({ restaurantsData }) => {
     if (restaurantsData) {
       setRestaurants(restaurantsData);
     } else {
-      fetch("https://maketerbackend.fly.dev/api/v1/restaurants")
+      fetch("https://makter-backend.fly.dev/api/v1/restaurants")
         .then((response) => {
           if (!response.ok) {
             throw new Error("Failed to fetch data");
@@ -99,7 +99,7 @@ const Service = ({ restaurantsData }) => {
 
     try {
       const response = await fetch(
-        "https://maketerbackend.fly.dev/api/v1/restaurants/likes",
+        "https://makter-backend.fly.dev/api/v1/restaurants/likes",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

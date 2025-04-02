@@ -13,7 +13,7 @@ function ResetPassword() {
     try {
       // 비밀번호 재설정 API 호출
       const response = await fetch(
-        "https://maketerbackend.fly.dev/api/v1/reset-password",
+        "https://makter-backend.fly.dev/api/v1/reset-password",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

@@ -12,7 +12,7 @@ function FavoriteRestaurants() {
     const fetchFavoriteRestaurants = async (retries = 3) => {
       try {
         const response = await fetch(
-          "https://maketerbackend.fly.dev/api/v1/restaurants/getlikes",
+          "https://makter-backend.fly.dev/api/v1/restaurants/getlikes",
           {
             method: "GET",
             credentials: "include",

@@ -26,7 +26,7 @@ const FoodBox = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch("https://maketerbackend.fly.dev/api/v1/restaurants")
+    fetch("https://makter-backend.fly.dev/api/v1/restaurants")
       .then((response) => response.json())
       .then((data) => {
         const sortedRestaurants = Array.isArray(data.data)

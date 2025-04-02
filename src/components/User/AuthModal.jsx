@@ -117,7 +117,7 @@ function AuthModal({ show, onClose, onLoginSuccess }) {
 
     try {
       const response = await fetch(
-        "https://maketerbackend.fly.dev/api/v1/send-verification-code",
+        "https://makter-backend.fly.dev/api/v1/send-verification-code",
         {
           method: "POST",
           headers: {
@@ -158,7 +158,7 @@ function AuthModal({ show, onClose, onLoginSuccess }) {
       console.log("User input code:", verificationCode); // 사용자가 입력한 인증코드 확인
 
       const response = await fetch(
-        "https://maketerbackend.fly.dev/api/v1/verify-code",
+        "https://makter-backend.fly.dev/api/v1/verify-code",
         {
           method: "POST",
           headers: {
@@ -238,8 +238,8 @@ function AuthModal({ show, onClose, onLoginSuccess }) {
     setLoading(true);
 
     const endpoint = isLogin
-      ? "https://maketerbackend.fly.dev/api/v1/login"
-      : "https://maketerbackend.fly.dev/api/v1/register";
+      ? "https://makter-backend.fly.dev/api/v1/login"
+      : "https://makter-backend.fly.dev/api/v1/register";
 
     const data = isLogin
       ? loginData

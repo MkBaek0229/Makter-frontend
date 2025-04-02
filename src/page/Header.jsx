@@ -31,7 +31,7 @@ const Header = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "https://maketerbackend.fly.dev/api/v1/logout",
+        "https://makter-backend.fly.dev/api/v1/logout",
         {
           method: "POST",
           credentials: "include", // Include session cookie

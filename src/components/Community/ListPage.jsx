@@ -12,7 +12,7 @@ function CommunityList() {
   const auth = useRecoilValue(authState); // 현재 로그인된 사용자 정보 가져오기
 
   useEffect(() => {
-    fetch("https://maketerbackend.fly.dev/api/v1/posts")
+    fetch("https://makter-backend.fly.dev/api/v1/posts")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch data");
@@ -30,7 +30,7 @@ function CommunityList() {
 
   const handleDelete = (postId, event) => {
     event.stopPropagation(); // 이벤트 전파 중단
-    fetch(`https://maketerbackend.fly.dev/api/v1/post/${postId}`, {
+    fetch(`https://makter-backend.fly.dev/api/v1/post/${postId}`, {
       method: "DELETE",
       credentials: "include", // 세션 쿠키 포함 (세션 기반 인증 시 필요)
     })

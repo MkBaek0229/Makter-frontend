@@ -54,7 +54,7 @@ function ReviewPage() {
   const fetchReviews = async (restaurant_Id) => {
     try {
       const response = await fetch(
-        `https://maketerbackend.fly.dev/api/v1/reviews/${restaurant_Id}`
+        `https://makter-backend.fly.dev/api/v1/reviews/${restaurant_Id}`
       );
       if (!response.ok) {
         throw new Error(`Failed to fetch reviews: ${response.status}`);
@@ -91,7 +91,7 @@ function ReviewPage() {
 
     setReviews(updatedReviews);
 
-    fetch("https://maketerbackend.fly.dev/api/v1/reviews", {
+    fetch("https://makter-backend.fly.dev/api/v1/reviews", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -134,7 +134,7 @@ function ReviewPage() {
 
     try {
       const response = await fetch(
-        `https://maketerbackend.fly.dev/api/v1/reviews/${review_id}`,
+        `https://makter-backend.fly.dev/api/v1/reviews/${review_id}`,
         {
           method: "DELETE",
           credentials: "include",

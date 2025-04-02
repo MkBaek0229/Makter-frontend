@@ -5,15 +5,6 @@ import { Link } from "react-router-dom";
 function FavoritesPage() {
   const [favorites, setFavorites] = useState([]);
 
-  useEffect(() => {
-    // // Fetch favorite restaurants (mock data or API call)
-    // // Replace with your actual API endpoint
-    // fetch('https://example.com/api/favorites') // Replace with real endpoint
-    //   .then((response) => response.json())
-    //   .then((data) => setFavorites(data))
-    //   .catch((error) => console.error('Error fetching favorites:', error));
-  }, []);
-
   return (
     <Container>
       <Title>즐겨찾기 목록</Title>

@@ -10,7 +10,7 @@ const ProfileModal = ({ show, onClose }) => {
     const fetchProfile = async () => {
       try {
         const response = await fetch(
-          "https://maketerbackend.fly.dev/api/v1/profile",
+          "https://makter-backend.fly.dev/api/v1/profile",
           {
             method: "GET",
             credentials: "include", // 세션 쿠키를 포함

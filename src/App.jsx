@@ -30,7 +30,7 @@ function App() {
     const checkSession = async (retries = 3) => {
       try {
         const response = await fetch(
-          "https://maketerbackend.fly.dev/api/v1/check-session",
+          "https://makter-backend.fly.dev/api/v1/check-session",
           {
             method: "GET",
             credentials: "include",

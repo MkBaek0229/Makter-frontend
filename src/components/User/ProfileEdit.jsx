@@ -17,7 +17,7 @@ function ProfileEdit() {
     const fetchProfile = async () => {
       try {
         const response = await fetch(
-          "https://maketerbackend.fly.dev/api/v1/getprofile",
+          "https://makter-backend.fly.dev/api/v1/getprofile",
           { credentials: "include" }
         );
         if (!response.ok) {
@@ -54,7 +54,7 @@ function ProfileEdit() {
       console.log("Updating profile with data:", requestBody); // 요청 데이터 로그
 
       const response = await fetch(
-        "https://maketerbackend.fly.dev/api/v1/updateprofile",
+        "https://makter-backend.fly.dev/api/v1/updateprofile",
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

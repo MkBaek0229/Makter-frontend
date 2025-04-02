@@ -20,7 +20,7 @@ function WritePage() {
 
     try {
       const response = await fetch(
-        `https://maketerbackend.fly.dev/api/v1/post`,
+        `https://makter-backend.fly.dev/api/v1/post`,
         {
           method: "POST",
           headers: {

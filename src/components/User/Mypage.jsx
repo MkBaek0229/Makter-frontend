@@ -22,7 +22,7 @@ function Mypage() {
       setLoading(true);
       try {
         const response = await fetch(
-          "https://makterback.fly.dev/api/v1/profile",
+          "https://makter-backend.fly.dev/api/v1/profile",
           { credentials: "include" } // 세션 인증 포함
         );
         const data = await response.json();
@@ -49,7 +49,7 @@ function Mypage() {
         setLoading(true);
         try {
           const response = await fetch(
-            "https://maketerbackend.fly.dev/api/v1/user-reviews",
+            "https://makter-backend.fly.dev/api/v1/user-reviews",
             {
               method: "GET",
               credentials: "include", // 세션 인증
@@ -85,7 +85,7 @@ function Mypage() {
         setLoading(true);
         try {
           const response = await fetch(
-            "https://maketerbackend.fly.dev/api/v1/user-posts",
+            "https://makter-backend.fly.dev/api/v1/user-posts",
             {
               method: "GET",
               credentials: "include", // 세션 인증
@@ -131,7 +131,7 @@ function Mypage() {
 
     try {
       const response = await fetch(
-        `https://maketerbackend.fly.dev/api/v1/reviews/${reviewId}`,
+        `https://makter-backend.fly.dev/api/v1/reviews/${reviewId}`,
         {
           method: "DELETE",
           credentials: "include",
