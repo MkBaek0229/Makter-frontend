@@ -4,18 +4,18 @@ import styled from "styled-components";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt, faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import Potodance from "../components/Home/Potodance";
-import ProfileModal from "../components/User/ProfileModal";
+import Potodance from "../components/Home/Potodance.jsx";
+import ProfileModal from "../components/User/ProfileModal.jsx";
 import AuthModal from "../components/User/AuthModal.jsx";
-import Mypage from "../components/User/Mypage";
+import Mypage from "../components/User/Mypage.jsx";
 import { useRecoilState } from "recoil"; // Recoil 사용
 import {
   loginModalState,
   profileModalState,
   authState,
 } from "../state/userAtoms.jsx"; // Recoil atom 불러오기
-import img1 from "../.././public/images/Users/archive.png";
-import img2 from "../.././public/images/Users/logout.png";
+import img1 from "../../public/images/Users/archive.png";
+import img2 from "../../public/images/Users/logout.png";
 
 const Header = () => {
   const [showLoginModal, setShowLoginModal] = useRecoilState(loginModalState);

@@ -7,7 +7,7 @@ import {
   mapMoveFunctionState,
   selectedRestaurantState,
 } from "../../state/mapAtoms";
-import FoodIndex from "../Home/FoodIndex";
+import FoodIndex from "./FoodIndex";
 import { useNavigate } from "react-router-dom";
 
 function FoodDetail() {

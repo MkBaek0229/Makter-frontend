@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 import styled from "styled-components";
 import Main from "./page/Main";
 import KakaoMap from "./page/Map/KaKaoMap";
-import KakaoMap2 from "../src/page/Map/KaKaoMap2";
+import KakaoMap2 from "./page/Map/KaKaoMap2";
 import Home from "./page/Map/Home";
 import Header from "./page/Header";
 import ServicePage from "./page/ServicePage";
