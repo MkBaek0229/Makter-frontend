@@ -29,8 +29,13 @@ const KakaoMap = () => {
   // Kakao 지도 로드
   useEffect(() => {
     const script = document.createElement("script");
-    script.src =
-      "https://dapi.kakao.com/v2/maps/sdk.js?appkey=4d90cac7ec413eb4aec50eac7135504d&autoload=false&libraries=services";
+
+    const KAKAO_API_KEY =
+      import.meta.env.VITE_KAKAO_MAP_API_KEY ||
+      "4d90cac7ec413eb4aec50eac7135504d";
+
+    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_API_KEY}&autoload=false&libraries=services`;
+
     script.async = true;
 
     script.onload = () => {

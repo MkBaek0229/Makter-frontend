@@ -13,12 +13,15 @@ const KakaoMap2 = ({ setMapMoveFunction }) => {
   const navigate = useNavigate();
   useEffect(() => {
     const script = document.createElement("script");
+    const KAKAO_API_KEY =
+      import.meta.env.VITE_KAKAO_MAP_API_KEY ||
+      "4d90cac7ec413eb4aec50eac7135504d";
+
     script.onload = () => {
       setKakao(window.kakao);
       console.log("Kakao script loaded:", window.kakao);
     };
-    script.src =
-      "https://dapi.kakao.com/v2/maps/sdk.js?appkey=4d90cac7ec413eb4aec50eac7135504d&autoload=false";
+    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_API_KEY}&autoload=false`;
     document.head.appendChild(script);
   }, []);
 
