@@ -420,3 +420,15 @@ const InfoText = styled.span`
   font-weight: 600;
   color: #333;
 `;
+
+const Message = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 18px;
+  color: #666;
+  background-color: #f9f9f9;
+  text-align: center;
+  padding: 20px;
+`;
