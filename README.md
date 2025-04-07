@@ -67,11 +67,8 @@
   <div markdown="1">
     ### 문제 상황
     CategoryReviewPage 컴포넌트에서 카테고리를 선택하여 맛집 목록을 보던 중, 브라우저 새로고침 시 빈 화면이 표시되는 현상이 발생했습니다. 이로 인해 사용자가 URL을 북마크하거나 공유할 경우 정상적인 페이지 접근이 불가능했습니다.
-    
-    <img src="https://github.com/user-attachments/assets/267cfe29-76c9-4e6b-9b38-a930844ceca5" alt="빈 화면 렌더링 문제" width="600"/>
-    
     ---
-    
+  
     ### 문제 원인
     
     1. **URL 파라미터 처리 부재**  
@@ -106,5 +103,98 @@
     
     이러한 세 가지 문제가 복합적으로 작용하여, 페이지 새로고침 시 빈 화면이 표시되는 현상이 발생합니다.
   
+  ## 해결 방법
+    
+    1. **URL 파라미터 처리 추가**  
+       URL에서 카테고리 정보를 추출하기 위해 `useParams` 훅을 추가합니다.
+       ```jsx
+       // 추가할 임포트
+       import { Link, useNavigate, useParams } from "react-router-dom";
+       
+       function CategoryReviewPage() {
+         const navigate = useNavigate();
+         const { category } = useParams(); // URL에서 카테고리 파라미터 가져오기
+         
+         // 기존 코드 유지...
+       }
+       ```
+    
+    2. **카테고리 기반 데이터 로딩 로직 추가**  
+       페이지 마운트 시 카테고리에 따라 API를 호출하여 데이터를 불러옵니다.
+       ```jsx
+       useEffect(() => {
+         if (!category) return;
+         
+         setIsLoading(true);
+         fetch(`https://makter-backend.fly.dev/api/v1/restaurants?category=${category}`)
+           .then((res) => res.json())
+           .then((data) => {
+             console.log("API 응답 데이터:", data);
+             // 데이터를 처리하여 필요한 형식으로 변환
+             const processedData = data.data.map(restaurant => ({
+               ...restaurant,
+               id: restaurant._id || restaurant.id  // API에 따라 ID 필드 처리
+             }));
+             
+             setSortedRestaurants(processedData);
+             setIsLoading(false);
+           })
+           .catch((error) => {
+             console.error("데이터 로딩 실패:", error);
+             setIsLoading(false);
+           });
+       }, [category, setSortedRestaurants]);
+       ```
+    
+    3. **정렬 로직 최적화 - 무한 루프 방지**  
+       필터 값에 따라 정렬을 수행하고, 변경사항이 있을 때만 상태를 업데이트합니다.
+       ```jsx
+       useEffect(() => {
+         if (!sortedRestaurants.length) return;
+         
+         let sortedArray = [...sortedRestaurants];
+         switch (filter) {
+           case "rating":
+             sortedArray.sort((a, b) => b.rating - a.rating);
+             break;
+           case "reviewCount":
+             sortedArray.sort((a, b) => b.reviewCount - a.reviewCount);
+             break;
+           case "viewCount":
+             sortedArray.sort((a, b) => b.viewCount - a.viewCount);
+             break;
+           default:
+             return; // 정렬 불필요시 종료
+         }
+         
+         // 변경사항이 있을 때만 상태 업데이트 (무한 루프 방지)
+         if (JSON.stringify(sortedArray) !== JSON.stringify(sortedRestaurants)) {
+           setSortedRestaurants(sortedArray);
+         }
+       }, [filter, sortedRestaurants]);
+       ```
+    
+    4. **로딩 및 에러 UI 추가**  
+       로딩 중임을 사용자에게 알려주고, 에러 상황이나 데이터가 없는 경우에 대한 UI를 제공합니다.
+       ```jsx
+       return (
+         <ReviewPage>
+           <CenteredContainer>
+             {isLoading && <LoadingBurger />}
+             {/* 데이터가 없는 경우의 처리 로직 추가 */}
+             {!isLoading && sortedRestaurants.length === 0 && (
+               <EmptyContainer>
+                 <EmptyText>해당 카테고리의 맛집 정보가 없습니다.</EmptyText>
+                 <BackToMainButton onClick={() => navigate('/review')}>
+                   메인으로 돌아가기
+                 </BackToMainButton>
+               </EmptyContainer>
+             )}
+             {/* 정상적인 데이터 렌더링 UI */}
+           </CenteredContainer>
+         </ReviewPage>
+       );
+       ```
+       
   </div>
 </details>
