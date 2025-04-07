@@ -63,11 +63,48 @@
 ## 🤔 기술적 이슈와 해결 과정 (트러블슈팅)
 
 <details>
-  <summary><b>카테고리 선택 후 새로고침 시 상태 초기화 문제
-</b></summary>
+  <summary><b>카테고리 선택 후 새로고침 시 상태 초기화 문제</b></summary>
   <div markdown="1">
-    <h1>문제1>리뷰페이지 새로고침시 빈 화면 렌더링</h1>
-    ![image](https://github.com/user-attachments/assets/267cfe29-76c9-4e6b-9b38-a930844ceca5)
-    <p>s</p>
+    ### 문제 상황
+    CategoryReviewPage 컴포넌트에서 카테고리를 선택하여 맛집 목록을 보던 중, 브라우저 새로고침 시 빈 화면이 표시되는 현상이 발생했습니다. 이로 인해 사용자가 URL을 북마크하거나 공유할 경우 정상적인 페이지 접근이 불가능했습니다.
+    
+    <img src="https://github.com/user-attachments/assets/267cfe29-76c9-4e6b-9b38-a930844ceca5" alt="빈 화면 렌더링 문제" width="600"/>
+    
+    ---
+    
+    ### 문제 원인
+    
+    1. **URL 파라미터 처리 부재**  
+       React Router의 `useParams` 훅을 사용하지 않아 URL에서 카테고리 정보(`/review/category/:category`)를 추출하지 못합니다.
+       ```jsx
+       // 문제 코드
+       import { Link, useNavigate } from "react-router-dom";
+       // useParams를 임포트하지 않음
+       
+       function CategoryReviewPage() {
+         const navigate = useNavigate();
+         // URL에서 카테고리 파라미터를 추출하는 코드 부재
+       }
+       ```
+    
+    2. **페이지 로드 시 데이터 로딩 로직 부재**  
+       페이지 마운트 시 API 호출을 통한 데이터 로딩 로직이 구현되어 있지 않아, 새로고침 시 초기 데이터가 로드되지 않습니다.
+       ```jsx
+       // 페이지 마운트 시 스크롤 이벤트만 처리됨
+       useEffect(() => {
+         window.addEventListener("scroll", handleScroll);
+         return () => window.removeEventListener("scroll", handleScroll);
+       }, []);
+       ```
+    
+    3. **Recoil 상태 의존성**  
+       컴포넌트가 Recoil의 `sortedRestaurants` 상태에만 의존하고 있어, 브라우저 새로고침 시 상태가 초기화(빈 배열)되어 데이터가 표시되지 않습니다.
+       ```jsx
+       // Recoil 상태에만 의존
+       const [sortedRestaurants, setSortedRestaurants] = useRecoilState(reviewRestaurantsState);
+       ```
+    
+    이러한 세 가지 문제가 복합적으로 작용하여, 페이지 새로고침 시 빈 화면이 표시되는 현상이 발생합니다.
+  
   </div>
 </details>

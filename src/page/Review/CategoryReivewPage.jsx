@@ -9,9 +9,10 @@ import {
 import { faArrowLeft, faUtensils } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DeviceFrameset } from "react-device-frameset";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import ReviewCard from "../../components/Review/ReviewCard";
+import LoadingBurger from "../../components/LoadingBurger";
 
 function CategoryReviewPage() {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ function CategoryReviewPage() {
     reviewRestaurantsState
   );
   const [cardInfo, setCardInfo] = useRecoilState(cardInfoState);
+  const { category } = useParams(); // URL에서 카테고리 파라미터 가져오기
 
   // Local states
   const [isLoading, setIsLoading] = useState(false);
@@ -47,6 +49,32 @@ function CategoryReviewPage() {
       setIsLoading(true);
     }
   };
+
+  // 데이터 로딩용 useEffect 추가 (기존 코드 아래에 추가)
+  useEffect(() => {
+    if (!category) return;
+
+    setIsLoading(true);
+    fetch(
+      `https://makter-backend.fly.dev/api/v1/restaurants?category=${category}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("API 응답 데이터:", data);
+        // 데이터를 처리하여 필요한 형식으로 변환
+        const processedData = data.data.map((restaurant) => ({
+          ...restaurant,
+          id: restaurant._id || restaurant.id, // API에 따라 ID 필드 처리
+        }));
+
+        setSortedRestaurants(processedData);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("데이터 로딩 실패:", error);
+        setIsLoading(false);
+      });
+  }, [category, setSortedRestaurants]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -74,7 +102,10 @@ function CategoryReviewPage() {
     setFilter(newFilter);
   };
 
+  // 기존 정렬 로직 수정
   useEffect(() => {
+    if (!sortedRestaurants.length) return;
+
     let sortedArray = [...sortedRestaurants];
     switch (filter) {
       case "rating":
@@ -87,17 +118,21 @@ function CategoryReviewPage() {
         sortedArray.sort((a, b) => b.viewCount - a.viewCount);
         break;
       default:
-        sortedArray = sortedRestaurants;
-        break;
+        return; // 정렬 불필요시 종료
     }
-    setSortedRestaurants(sortedArray);
-  }, [filter, sortedRestaurants, setSortedRestaurants]);
+
+    // 변경사항이 있을 때만 상태 업데이트 (무한 루프 방지)
+    if (JSON.stringify(sortedArray) !== JSON.stringify(sortedRestaurants)) {
+      setSortedRestaurants(sortedArray);
+    }
+  }, [filter, sortedRestaurants]); // setSortedRestaurants 제거
 
   return (
     <ReviewPage>
       <H1>Maketer</H1>
       <H2>대전 전체의 맛집을 찾아줍니다</H2>
       <CenteredContainer>
+        {isLoading && <LoadingBurger />}
         <DeviceFrameWrapper>
           <DeviceFrameset device="iPad Mini">
             <StyledContainer>
